@@ -5,10 +5,16 @@
 
 #define BUFFER_SIZE 1024
 
+/**
+ * main - The main function of the program.
+ *        It implements a simple shell that takes user commands and executes them.
+ *
+ * Return: Always 0.
+ */
 int main(void)
 {
-	char command[BUFFER_SIZE];
 	int exit_flag = 0;
+	char command[BUFFER_SIZE];
 
 	while (!exit_flag)
 	{
