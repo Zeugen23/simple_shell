@@ -10,23 +10,23 @@ int main(void) {
     int exit_flag = 0;
 
     while (!exit_flag) {
-        printf("$ "); // Display the prompt
-        fflush(stdout); // Ensure the prompt is displayed
+        printf("$ "); /* Display the prompt */
+        fflush(stdout); /* Ensure the prompt is displayed */
 
         if (fgets(command, BUFFER_SIZE, stdin) == NULL) {
-            // Handle end of file (Ctrl+D)
+            /* Handle end of file (Ctrl+D) */
             printf("\n");
             break;
         }
 
-        // Remove the newline character from the input
+        /* Remove the newline character from the input */
         command[strcspn(command, "\n")] = '\0';
 
         if (strcmp(command, "exit") == 0) {
-            // Exit the shell if the user inputs "exit"
+            /* Exit the shell if the user inputs "exit" */
             exit_flag = 1;
         } else {
-            // Execute the command
+            /* Execute the command */
             int status = system(command);
 
             if (status == -1) {
