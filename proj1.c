@@ -7,18 +7,18 @@
 
 /**
  * main - The main function of the program.
- *        It implements a simple shell that takes user commands
- *        and executes them.
+ *        It implements a simple shell that takes user commands and executes them.
  *
  * Return: Always 0.
  */
 int main(void)
 {
+	int exit_flag = 0;
 	char command[BUFFER_SIZE];
 
-	while (1)
+	while (!exit_flag)
 	{
-		printf("$ "); /* Display the prompt */
+		printf("$\n"); /* Display the prompt */
 		fflush(stdout); /* Ensure the prompt is displayed */
 
 		if (fgets(command, BUFFER_SIZE, stdin) == NULL)
@@ -31,33 +31,22 @@ int main(void)
 		/* Remove the newline character from the input */
 		command[strcspn(command, "\n")] = '\0';
 
-		pid_t pid = fork();
-
-		if (pid < 0)
+		if (strcmp(command, "exit") == 0)
 		{
-			perror("Fork failed");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			/* Child process */
-
-			/* Execute the command */
-			int status = execve(command, NULL, NULL);
-
-			if (status == -1)
-			{
-				perror("Execve failed");
-				exit(EXIT_FAILURE);
-			}
+			/* Exit the shell if the user inputs "exit" */
+			exit_flag = 1;
 		}
 		else
 		{
-			/* Parent process */
-			int child_status;
-			waitpid(pid, &child_status, 0);
+			/* Execute the command */
+			int status = system(command);
+
+			if (status == -1)
+			{
+				printf("Error executing command\n");
+			}
 		}
 	}
 
-	return 0;
+	return (0);
 }
